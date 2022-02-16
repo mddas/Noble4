@@ -5,13 +5,15 @@ import com.company.DataBase_Mysql;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Vector;
 
 public class GetMarksheetTable {
 
     public static DefaultTableModel getModelMarksheet(String id){
         DefaultTableModel model = new DefaultTableModel();
-        HashMap<String, String> StudentDetailList=new HashMap<String,String>();
+        Map<String, String> StudentDetailList=new LinkedHashMap<String,String>();
 
        // model.addColumn("S.N");
         model.addColumn("Subjects");

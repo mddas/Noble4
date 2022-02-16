@@ -180,7 +180,7 @@ public class result_search implements ActionListener, ItemListener {
             Year_choose_combo.setSelectedItem(Year_selected);//default select
         }
         else{
-            Year_choose_combo.setSelectedItem("2079");
+            Year_choose_combo.setSelectedItem("2078");
         }
     }
 

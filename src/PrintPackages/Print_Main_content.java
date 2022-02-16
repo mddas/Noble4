@@ -1,21 +1,30 @@
 package PrintPackages;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
 
+import javax.print.*;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Sides;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
+import java.awt.print.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.MessageFormat;
+import java.util.Arrays;
 //
 
 public class Print_Main_content {
@@ -186,12 +195,12 @@ public class Print_Main_content {
     }
     private void print_tableTopdf() {
         try {
-            JTable table=GetTable();
+            JTable table = GetTable();
             Document doc = new Document();
             PdfWriter.getInstance(doc, new FileOutputStream("marksheet.pdf"));
             doc.open();
-            com.lowagie.text.Font font= FontFactory.getFont(FontFactory.HELVETICA,18, Font.BOLD, Color.RED);
-            com.lowagie.text.Font font1= FontFactory.getFont(FontFactory.TIMES_ITALIC,14, Font.PLAIN, Color.BLACK);
+            com.itextpdf.text.Font font = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLD, BaseColor.RED);
+            com.itextpdf.text.Font font1 = FontFactory.getFont(FontFactory.TIMES_ITALIC, 14, Font.PLAIN, BaseColor.BLACK);
 
             doc.add(new Paragraph("                          Noble Secondary English Boarding School", font));
             doc.add(new Paragraph("                                            Janakpur Dham-12", font));
@@ -215,10 +224,10 @@ public class Print_Main_content {
                 for (int cols = 0; cols < table.getColumnCount(); cols++) {
                     cell = new PdfPCell();
                     cell.setFixedHeight(34);// Control the fixed height of each cell
-                    String cellValue=table.getModel().getValueAt(rows, cols).toString();
+                    String cellValue = table.getModel().getValueAt(rows, cols).toString();
                     cell.addElement(new Paragraph(cellValue));
                     pdfTable.addCell(cell);
-                   // pdfTable.addCell(table.getModel().getValueAt(rows, cols).toString());
+                    // pdfTable.addCell(table.getModel().getValueAt(rows, cols).toString());
 
                 }
             }
@@ -233,8 +242,39 @@ public class Print_Main_content {
             doc.add(new Paragraph("              Date of Issue_______________"));
             doc.add(new Paragraph("\n"));
             doc.add(new Paragraph("______________________________________________________________________________"));
+
+
             doc.close();
-            System.out.println("done");
+
+            //https://stackoverflow.com/questions/29755305/itext-direct-printing
+
+            DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PAGEABLE;
+            PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
+            patts.add(Sides.DUPLEX);
+            PrintService[] ps = PrintServiceLookup.lookupPrintServices(flavor, patts);
+            if (ps.length == 0) {
+               throw new IllegalStateException("No Printer found");
+            }
+            System.out.println("Available printers: " + Arrays.asList(ps));
+
+            PrintService myService = null;
+            for (PrintService printService : ps) {
+                if (printService.getName().equals("Your printer name")) {
+                    myService = printService;
+                    break;
+                }
+            }
+
+            if (myService == null) {
+                throw new IllegalStateException("Printer not found");
+            }
+
+            FileInputStream fis = new FileInputStream("marksheet.pdf");
+            Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+            DocPrintJob printJob = myService.createPrintJob();
+            printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
+            fis.close();
+
         }
         catch (Exception e){
             System.out.println(e);

@@ -1,5 +1,7 @@
 package PrintPackages;
 
+import Exam.GetSubjectFullMark;
+import Exam.result_search;
 import com.company.DataBase_Mysql;
 
 import javax.swing.table.DefaultTableModel;
@@ -14,7 +16,10 @@ public class GetMarksheetTable {
     public static DefaultTableModel getModelMarksheet(String id){
         DefaultTableModel model = new DefaultTableModel();
         Map<String, String> StudentDetailList=new LinkedHashMap<String,String>();
-
+        HashMap<String,String> full_mark;
+        GetSubjectFullMark HashMapFullMarkObj=new GetSubjectFullMark(result_search.class_selected,result_search.Year_selected,result_search.Terminal_selected);
+        full_mark=HashMapFullMarkObj.getFullMark();
+        System.out.println(result_search.class_selected+":"+result_search.Year_selected+":"+result_search.Terminal_selected);
        // model.addColumn("S.N");
         model.addColumn("Subjects");
         model.addColumn("Full Marks");
@@ -40,7 +45,8 @@ public class GetMarksheetTable {
         for (String key : StudentDetailList.keySet()) {
             Vector<String> rowdata = new Vector<String>();
             rowdata.add(key);
-            rowdata.add("100");
+            System.out.println(result_search.fullMark+":fullmark");
+            rowdata.add("result_search.fullMark.get(key)");
             rowdata.add("32");
             rowdata.add(StudentDetailList.get(key));
             rowdata.add("3.7 gpa");

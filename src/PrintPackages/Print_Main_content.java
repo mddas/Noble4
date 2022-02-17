@@ -248,30 +248,38 @@ public class Print_Main_content {
 
             //https://stackoverflow.com/questions/29755305/itext-direct-printing
 
-            DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PAGEABLE;
-            PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
-            patts.add(Sides.DUPLEX);
-            PrintService[] ps = PrintServiceLookup.lookupPrintServices(flavor, patts);
-            if (ps.length == 0) {
-               throw new IllegalStateException("No Printer found");
+            //
+            PrintService DefaultservicePrinter =
+                    PrintServiceLookup.lookupDefaultPrintService();//this return default Print Service.
+            if (DefaultservicePrinter != null) {
+                String printServiceName = DefaultservicePrinter.getName();
+                System.out.println("Default Print Service Name is " + printServiceName);
+            } else {
+                System.out.println("No default print service found");
             }
-            System.out.println("Available printers: " + Arrays.asList(ps));
-
-            PrintService myService = null;
-            for (PrintService printService : ps) {
-                if (printService.getName().equals("Your printer name")) {
-                    myService = printService;
-                    break;
+            ///
+/*this print all print service by search specific */
+            PrintService searchSpecificPrinter = null;
+            /* locate a print service that can handle it */
+            PrintService[] pservices =
+                    PrintServiceLookup.lookupPrintServices(null, null);
+            if (pservices.length > 0) {
+                int ii = 0;
+                while (ii < pservices.length) {
+                    System.out.println("Named Printer found: " + pservices[ii].getName());
+                    if (pservices[ii].getName().endsWith("YourPrinterName")) {
+                        searchSpecificPrinter = pservices[ii];//this is print service
+                        System.out.println("search by Named Printer selected: " + pservices[ii].getName() + "*");
+                        break;
+                    }
+                    ii++;
                 }
             }
 
-            if (myService == null) {
-                throw new IllegalStateException("Printer not found");
-            }
-
+            //
             FileInputStream fis = new FileInputStream("marksheet.pdf");
             Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
-            DocPrintJob printJob = myService.createPrintJob();
+            DocPrintJob printJob = DefaultservicePrinter.createPrintJob();
             printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
             fis.close();
 

@@ -202,7 +202,6 @@ public class result_heading implements ActionListener, ItemListener {
                     result_search.subjects.add(sub_10);
                 }
 
-
             }
             catch (Exception e){
                 System.out.println(e);

@@ -9,6 +9,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class result_search implements ActionListener, ItemListener {
     JButton search_B, NewRegister, ExamManageB, sheatPlanB, viewResultB;
@@ -17,6 +20,7 @@ public class result_search implements ActionListener, ItemListener {
     JComboBox class_combo,Year_choose_combo,Terminal_combo;
     JTextField roll,serch;
     public static ArrayList<String> subjects=new ArrayList<String>();
+    public static HashMap<String, String> fullMark=new HashMap<String,String>();
     public static String class_selected;
     public static String Year_selected;
     public static String Terminal_selected;

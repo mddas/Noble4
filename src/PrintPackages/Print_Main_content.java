@@ -277,11 +277,14 @@ public class Print_Main_content {
             }
 
             //
+            /*
             FileInputStream fis = new FileInputStream("marksheet.pdf");
             Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
             DocPrintJob printJob = DefaultservicePrinter.createPrintJob();
             printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
             fis.close();
+
+             */
 
         }
         catch (Exception e){

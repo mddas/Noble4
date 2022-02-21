@@ -8,11 +8,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 public class Total_setting {
-    public Total_setting(String[] args) {
-        //printer
+    int value;
+    public Total_setting(int option){
+        value=option;
     }
-
-    public void WritePrinter(int value) {
+    public void WritePrinter() {
         //this is dictionary inside dictionary
         JSONObject printerKeyValue = new JSONObject();
         printerKeyValue.put("PrinterOption", value);

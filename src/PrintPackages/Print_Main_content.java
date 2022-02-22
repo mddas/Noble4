@@ -258,9 +258,10 @@ public class Print_Main_content {
                 System.out.println("No default print service found");
             }
             ///
-/*this print all print service by search specific */
+            /*
+   this print all print service by search specific
             PrintService searchSpecificPrinter = null;
-            /* locate a print service that can handle it */
+             locate a print service that can handle it
             PrintService[] pservices =
                     PrintServiceLookup.lookupPrintServices(null, null);
             if (pservices.length > 0) {
@@ -276,7 +277,10 @@ public class Print_Main_content {
                 }
             }
 
+             */
+
             //
+
             /*
             FileInputStream fis = new FileInputStream("marksheet.pdf");
             Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
@@ -285,6 +289,8 @@ public class Print_Main_content {
             fis.close();
 
              */
+
+
 
         }
         catch (Exception e){

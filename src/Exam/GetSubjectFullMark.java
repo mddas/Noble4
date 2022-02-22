@@ -9,7 +9,7 @@ public class GetSubjectFullMark {
     String class_name;
     String Year_jcombo;
     String Terminal_jcombo;
-    HashMap<String,String> fullmark;
+    HashMap<String,String> fullmark=new HashMap<String,String>();
 
     public GetSubjectFullMark(String claS, String Year, String Terminal) {
         class_name = claS;
@@ -34,7 +34,6 @@ public class GetSubjectFullMark {
             String sub_9 = rs.getString("sub_9");
             String sub_10 = rs.getString("sub_10");
             String sub_1_fm = rs.getString("sub_1_fm");
-            System.out.println(sub_1+":"+sub_1_fm);
             String sub_2_fm = rs.getString("sub_2_fm");
             String sub_3_fm = rs.getString("sub_3_fm");
             String sub_4_fm = rs.getString("sub_4_fm");
@@ -74,9 +73,8 @@ public class GetSubjectFullMark {
             if (!sub_10.isEmpty()) {
                 fullmark.put(sub_10, sub_10_fm);
             }
-            System.out.println(fullmark);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e+":errror full mark");
         }
         return fullmark;
     }

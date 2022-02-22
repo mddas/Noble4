@@ -19,7 +19,6 @@ public class GetMarksheetTable {
         HashMap<String,String> full_mark;
         GetSubjectFullMark HashMapFullMarkObj=new GetSubjectFullMark(result_search.class_selected,result_search.Year_selected,result_search.Terminal_selected);
         full_mark=HashMapFullMarkObj.getFullMark();
-        System.out.println(result_search.class_selected+":"+result_search.Year_selected+":"+result_search.Terminal_selected);
        // model.addColumn("S.N");
         model.addColumn("Subjects");
         model.addColumn("Full Marks");
@@ -45,8 +44,8 @@ public class GetMarksheetTable {
         for (String key : StudentDetailList.keySet()) {
             Vector<String> rowdata = new Vector<String>();
             rowdata.add(key);
-            System.out.println(result_search.fullMark+":fullmark");
-            rowdata.add("result_search.fullMark.get(key)");
+            System.out.println(full_mark+":fullMark");
+            rowdata.add(full_mark.get(key));
             rowdata.add("32");
             rowdata.add(StudentDetailList.get(key));
             rowdata.add("3.7 gpa");
@@ -64,7 +63,6 @@ public class GetMarksheetTable {
         rowdata.add("Good");
         model.addRow(rowdata);
 
-        System.out.println(StudentDetailList);
 
         return model;
     }
